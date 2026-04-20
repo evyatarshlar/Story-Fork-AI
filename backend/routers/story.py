@@ -68,9 +68,11 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
             db.commit()
 
             # story = StoryGenerator.generate_story(db, session_id, theme)
+            # job.story_id = story.id  # todo: update story id
+
             story = {}
 
-            job.story_id = story.id  # todo: update story id
+            job.story_id = story.get('id')  # todo: update story id
             job.status = "completed"
             job.completed_at = datetime.now()
             db.commit()
