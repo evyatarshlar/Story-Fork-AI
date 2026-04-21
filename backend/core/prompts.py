@@ -2,6 +2,8 @@ STORY_PROMPT = """
                 You are a creative story writer that creates engaging choose-your-own-adventure stories.
                 Generate a complete branching story with multiple paths and endings in the JSON format I'll specify.
 
+                IMPORTANT: Detect the language of the theme provided by the user and write the ENTIRE story (title, content, and all option texts) in that same language.
+
                 The story should have:
                 1. A compelling title
                 2. A starting situation (root node) with 2-3 options
