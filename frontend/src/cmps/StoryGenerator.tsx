@@ -69,17 +69,23 @@ function StoryGenerator() {
 
     useEffect(() => {
         let pollInterval: ReturnType<typeof setInterval> | undefined;
+        let pollTimeout: ReturnType<typeof setTimeout> | undefined;
 
         if (jobId && jobStatus === "processing") {
             pollInterval = setInterval(() => {
                 pollJobStatus(jobId)
             }, 2000)
+
+            pollTimeout = setTimeout(() => {
+                clearInterval(pollInterval);
+                setLoading(false);
+                setError("Story generation is taking too long. Please try again.");
+            }, 120_000)
         }
 
         return () => {
-            if (pollInterval) {
-                clearInterval(pollInterval)
-            }
+            if (pollInterval) clearInterval(pollInterval);
+            if (pollTimeout) clearTimeout(pollTimeout);
         }
     }, [jobId, jobStatus, pollJobStatus])
 

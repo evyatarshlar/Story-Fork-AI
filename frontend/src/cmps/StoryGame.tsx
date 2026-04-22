@@ -49,7 +49,7 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                 <h2>{story?.title}</h2>
             </header>
             <div className="story-content">
-                {currentNode && <div className="story-node">
+                {currentNode && <div className="story-node" key={currentNodeId}>
                     <p>{currentNode.content}</p>
                     {isEnding ?
                         <div className="story-ending">
