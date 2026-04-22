@@ -4,6 +4,7 @@ import axios from "axios";
 import ThemeInput from "./ThemeInput.jsx";
 import LoadingStatus from "./LoadingStatus.jsx";
 import { API_BASE_URL } from "../util.js";
+import type { StoredStory } from "../types";
 
 function StoryGenerator() {
     const navigate = useNavigate()
@@ -12,6 +13,28 @@ function StoryGenerator() {
     const [jobStatus, setJobStatus] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+    const [recentStories, setRecentStories] = useState<StoredStory[]>([])
+    const [communityStories, setCommunityStories] = useState<StoredStory[]>([])
+
+    useEffect(() => {
+        let cancelled = false;
+        const fetchStoryLists = async () => {
+            try {
+                const [myRes, communityRes] = await Promise.all([
+                    axios.get<StoredStory[]>(`${API_BASE_URL}/stories`),
+                    axios.get<StoredStory[]>(`${API_BASE_URL}/stories/community`),
+                ]);
+                if (!cancelled) {
+                    setRecentStories(myRes.data);
+                    setCommunityStories(communityRes.data);
+                }
+            } catch {
+                // silently ignore — lists are non-critical
+            }
+        };
+        fetchStoryLists();
+        return () => { cancelled = true; };
+    }, [])
 
     const fetchStory = useCallback(async (id: string) => {
         try {
@@ -50,7 +73,7 @@ function StoryGenerator() {
         if (jobId && jobStatus === "processing") {
             pollInterval = setInterval(() => {
                 pollJobStatus(jobId)
-            }, 5000)
+            }, 2000)
         }
 
         return () => {
@@ -96,6 +119,42 @@ function StoryGenerator() {
             {!jobId && !error && !loading && <ThemeInput onSubmit={generateStory} />}
 
             {loading && <LoadingStatus theme={theme} />}
+
+            {!jobId && !error && !loading && recentStories.length > 0 && (
+                <div className="recent-stories">
+                    <h3>Your Stories</h3>
+                    {recentStories.map(story => (
+                        <div
+                            key={story.id}
+                            className="recent-story-item"
+                            onClick={() => navigate(`/story/${story.id}`)}
+                        >
+                            <span className="recent-story-title">{story.title}</span>
+                            <span className="recent-story-date">
+                                {new Date(story.created_at).toLocaleDateString()}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {!jobId && !error && !loading && communityStories.length > 0 && (
+                <div className="recent-stories community-stories">
+                    <h3>Community Stories</h3>
+                    {communityStories.map(story => (
+                        <div
+                            key={story.id}
+                            className="recent-story-item"
+                            onClick={() => navigate(`/story/${story.id}`)}
+                        >
+                            <span className="recent-story-title">{story.title}</span>
+                            <span className="recent-story-date">
+                                {new Date(story.created_at).toLocaleDateString()}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

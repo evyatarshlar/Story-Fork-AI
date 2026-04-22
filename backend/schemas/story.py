@@ -34,6 +34,15 @@ class CreateStoryRequest(BaseModel):
     theme: str
 
 
+class StoryListItemResponse(BaseModel):
+    id: int
+    title: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 class CompleteStoryResponse(StoryBase):
     id: int
     created_at: datetime

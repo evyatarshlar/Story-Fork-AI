@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const EXAMPLE_THEMES = ["pirates", "space", "medieval", "cyberpunk", "underwater", "dinosaurs", "wizard school", "time travel"];
+
 function ThemeInput({ onSubmit }: { onSubmit: (theme: string) => void }) {
     const [theme, setTheme] = useState("");
     const [error, setError] = useState("");
@@ -33,6 +35,15 @@ function ThemeInput({ onSubmit }: { onSubmit: (theme: string) => void }) {
 
                 <button type="submit" className='generate-btn'>Generate Story</button>
             </form>
+
+            <div className="examples">
+                <h3>Or pick an example:</h3>
+                <ul>
+                    {EXAMPLE_THEMES.map(t => (
+                        <li key={t} onClick={() => setTheme(t)}>{t}</li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import StoryLoader from "./cmps/StoryLoader"
 import StoryGenerator from "./cmps/StoryGenerator";
+import NotFound from "./cmps/NotFound";
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path={"/story/:id"} element={<StoryLoader />} />
             <Route path={"/"} element={<StoryGenerator />}/>
+            <Route path={"*"} element={<NotFound />} />
           </Routes>
         </main>
       </div>

@@ -369,3 +369,139 @@ button:hover {
 .error-message button:hover {
   background-color: #d32f2f;
 }
+
+/* Back button */
+.back-btn {
+  background-color: #e8e8e8;
+  color: #444;
+}
+
+.back-btn:hover {
+  background-color: #d0d0d0;
+}
+
+/* Share button */
+.share-btn {
+  background-color: var(--accent-color);
+}
+
+.share-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.share-btn.copied {
+  background-color: var(--success-color);
+}
+
+/* Recent Stories */
+.recent-stories {
+  margin-top: 1.5rem;
+  background-color: var(--card-background);
+  padding: 1.5rem 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.recent-stories h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.recent-story-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  background-color: #f0f7ff;
+  border: 1px solid #d0e0f7;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.recent-story-item:last-child {
+  margin-bottom: 0;
+}
+
+.recent-story-item:hover {
+  background-color: #e0f0ff;
+  transform: translateY(-1px);
+}
+
+.recent-story-title {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.recent-story-date {
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+/* Community stories section */
+.community-stories {
+  border-top: 2px solid #e9ecef;
+  padding-top: 1.5rem;
+}
+
+.community-stories h3 {
+  color: var(--secondary-color);
+}
+
+/* Example themes */
+.examples {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.examples h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.examples ul {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.examples li {
+  background-color: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.examples li:hover {
+  background-color: #d0e8ff;
+}
+
+/* Not Found */
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.not-found h2 {
+  font-size: 5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.not-found p {
+  color: #666;
+  margin-bottom: 2rem;
+}

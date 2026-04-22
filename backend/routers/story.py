@@ -8,7 +8,8 @@ from db.database import get_db, SessionLocal
 from models.story import Story, StoryNode
 from models.job import StoryJob
 from schemas.story import (
-    CompleteStoryResponse, CompleteStoryNodeResponse, CreateStoryRequest
+    CompleteStoryResponse, CompleteStoryNodeResponse, CreateStoryRequest,
+    StoryListItemResponse
 )
 from schemas.job import StoryJobResponse
 from core.story_generator import StoryGenerator
@@ -22,6 +23,35 @@ def get_session_id(session_id: Optional[str] = Cookie(None)):
     if not session_id:
         session_id = str(uuid.uuid4())
     return session_id
+
+
+@router.get("", response_model=list[StoryListItemResponse])
+def list_stories(
+        session_id: str = Depends(get_session_id),
+        db: Session = Depends(get_db)
+):
+    stories = (
+        db.query(Story)
+        .filter(Story.session_id == session_id)
+        .order_by(Story.created_at.desc())
+        .all()
+    )
+    return stories
+
+
+@router.get("/community", response_model=list[StoryListItemResponse])
+def list_community_stories(
+        session_id: str = Depends(get_session_id),
+        db: Session = Depends(get_db)
+):
+    stories = (
+        db.query(Story)
+        .filter(Story.session_id != session_id)
+        .order_by(Story.created_at.desc())
+        .limit(20)
+        .all()
+    )
+    return stories
 
 
 @router.post("/create", response_model=StoryJobResponse)

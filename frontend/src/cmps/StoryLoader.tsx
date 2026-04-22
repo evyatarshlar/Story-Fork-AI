@@ -1,28 +1,10 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingStatus from "./LoadingStatus";
 import StoryGame from "./StoryGame";
 import { API_BASE_URL } from "../util";
-
-interface StoryOption {
-    node_id: string;
-    text: string;
-}
-
-interface StoryNode {
-    id: string;
-    content: string;
-    is_ending: boolean;
-    is_winning_ending: boolean;
-    options: StoryOption[];
-}
-
-interface Story {
-    title: string;
-    root_node: StoryNode;
-    all_nodes: Record<string, StoryNode>;
-}
+import type { Story } from "../types";
 
 function StoryLoader() {
     const { id } = useParams();
@@ -103,6 +85,7 @@ function StoryLoader() {
         );
     }
 
+    return null;
 }
 
 export default StoryLoader;
