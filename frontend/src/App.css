@@ -149,6 +149,58 @@ button:hover {
   background-color: var(--secondary-color);
 }
 
+.advanced-toggle {
+  margin: 0.75rem 0;
+  text-align: left;
+}
+
+.advanced-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+}
+
+.advanced-toggle-btn:hover {
+  text-decoration: underline;
+}
+
+.advanced-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.02);
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.option-row label {
+  width: 130px;
+  font-size: 0.875rem;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.option-row select {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.875rem;
+  background: white;
+}
+
+
 .examples {
   margin-top: 2rem;
   text-align: left;
