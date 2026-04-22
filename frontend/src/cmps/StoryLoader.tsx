@@ -5,9 +5,28 @@ import LoadingStatus from "./LoadingStatus";
 import StoryGame from "./StoryGame";
 import { API_BASE_URL } from "../util";
 
+interface StoryOption {
+    node_id: string;
+    text: string;
+}
+
+interface StoryNode {
+    id: string;
+    content: string;
+    is_ending: boolean;
+    is_winning_ending: boolean;
+    options: StoryOption[];
+}
+
+interface Story {
+    title: string;
+    root_node: StoryNode;
+    all_nodes: Record<string, StoryNode>;
+}
+
 function StoryLoader() {
     const { id } = useParams();
-    const [story, setStory] = useState<Record<string, unknown> | null>(null);
+    const [story, setStory] = useState<Story | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -34,7 +53,6 @@ function StoryLoader() {
         loadStory(id);
     }, [id]);
 
-
     // useEffect(() => {
     //     const loadStory = async () => {
     //         setLoading(true);
@@ -54,7 +72,6 @@ function StoryLoader() {
     //     };
     //     loadStory();
     // }, [id]);
-
 
     const creatNewStory = () => {
             navigate("/");
@@ -81,7 +98,7 @@ function StoryLoader() {
     if (story) {
         return (
             <div className="story-loader">
-                <StoryGame story={story} />
+                <StoryGame story={story} onNewStory={creatNewStory} />
             </div>
         );
     }

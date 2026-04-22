@@ -71,7 +71,6 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                     }
                 </div>}
 
-
                 <div className="story-controls">
                     <button onClick={restartStory} className="reset-btn">
                         Restart Story
@@ -81,9 +80,6 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                         New Story
                     </button>}
                 </div>
-
-
-
 
             </div>
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ThemeInput({ onSubmit }: { onSubmit: () => void }) {
+function ThemeInput({ onSubmit }: { onSubmit: (theme: string) => void }) {
     const [theme, setTheme] = useState("");
     const [error, setError] = useState("");
 
@@ -11,7 +11,7 @@ function ThemeInput({ onSubmit }: { onSubmit: () => void }) {
             return
         }
         setError("");
-        onSubmit();
+        onSubmit(theme);
     };
 
     return (
