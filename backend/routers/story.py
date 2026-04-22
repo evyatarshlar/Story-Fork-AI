@@ -79,12 +79,19 @@ def create_story(
         generate_story_task,
         job_id=job_id,
         theme=request.theme,
-        session_id=session_id
+        session_id=session_id,
+        age=request.age,
+        depth=request.depth,
+        genre=request.genre,
+        tone=request.tone,
+        length=request.length,
     )
 
     return job
 
-def generate_story_task(job_id: str, theme: str, session_id: str):
+def generate_story_task(job_id: str, theme: str, session_id: str,
+                         age: int = None, depth: int = 4, genre: str = None,
+                         tone: str = None, length: str = None):
     db = SessionLocal()
 
     try:
@@ -97,7 +104,9 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
             job.status = "processing"
             db.commit()
 
-            story = StoryGenerator.generate_story(db, session_id, theme)
+            story = StoryGenerator.generate_story(db, session_id, theme,
+                                                   age=age, depth=depth, genre=genre,
+                                                   tone=tone, length=length)
             job.story_id = story.id
 
             job.status = "completed"

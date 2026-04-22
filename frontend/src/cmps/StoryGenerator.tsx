@@ -4,7 +4,7 @@ import axios from "axios";
 import ThemeInput from "./ThemeInput.jsx";
 import LoadingStatus from "./LoadingStatus.jsx";
 import { API_BASE_URL } from "../util.js";
-import type { StoredStory } from "../types";
+import type { StoredStory, StoryOptions } from "../types";
 
 function StoryGenerator() {
     const navigate = useNavigate()
@@ -89,13 +89,13 @@ function StoryGenerator() {
         }
     }, [jobId, jobStatus, pollJobStatus])
 
-    const generateStory = async (theme: string) => {
+    const generateStory = async (theme: string, options: StoryOptions = {}) => {
         setLoading(true)
         setError(null)
         setTheme(theme)
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/stories/create`, { theme })
+            const response = await axios.post(`${API_BASE_URL}/stories/create`, { theme, ...options })
             const { job_id, status } = response.data
             setJobId(job_id)
             setJobStatus(status)

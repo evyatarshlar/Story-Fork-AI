@@ -32,6 +32,11 @@ class StoryBase(BaseModel):
 
 class CreateStoryRequest(BaseModel):
     theme: str
+    age: Optional[int] = None
+    depth: Optional[int] = 4
+    genre: Optional[str] = None
+    tone: Optional[str] = None
+    length: Optional[str] = None  # "short", "medium", "long"
 
 
 class StoryListItemResponse(BaseModel):

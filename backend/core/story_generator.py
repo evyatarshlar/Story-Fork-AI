@@ -4,7 +4,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 
-from core.prompts import STORY_PROMPT
+from core.prompts import build_prompt
 from models.story import Story, StoryNode
 from core.models import StoryLLMResponse, StoryNodeLLM
 from dotenv import load_dotenv
@@ -22,17 +22,21 @@ class StoryGenerator:
         # if openai_api_key and serviceurl:
         #     return ChatOpenAI(model="gpt-4o-mini", api_key=openai_api_key, base_url=serviceurl)
 
-        return ChatOpenAI(model="gpt-4o-mini")
+        return ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
     @classmethod
-    def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy")-> Story:
+    def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy",
+                       age: int = None, depth: int = 4, genre: str = None,
+                       tone: str = None, length: str = None) -> Story:
         llm = cls._get_llm()
         story_parser = PydanticOutputParser(pydantic_object=StoryLLMResponse)
+
+        story_prompt = build_prompt(depth=depth, age=age, genre=genre, length=length, tone=tone)
 
         prompt = ChatPromptTemplate.from_messages([
             (
                 "system",
-                STORY_PROMPT
+                story_prompt
             ),
             (
                 "human",
@@ -45,6 +49,9 @@ class StoryGenerator:
         response_text = raw_response
         if hasattr(raw_response, "content"):
             response_text = raw_response.content
+
+        if not response_text:
+            raise ValueError("LLM returned an empty response. Check your API key and model name.")
 
         story_structure = story_parser.parse(response_text)
 

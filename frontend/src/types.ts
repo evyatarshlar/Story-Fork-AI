@@ -1,3 +1,11 @@
+export interface StoryOptions {
+    age?: number;
+    depth?: number;
+    genre?: string;
+    tone?: string;
+    length?: string;
+}
+
 export interface StoryOption {
     node_id: string;
     text: string;
