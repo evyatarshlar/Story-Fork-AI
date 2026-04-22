@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import StoryLoader from "./components/StoryLoader"
-import StoryGenerator from "./components/StoryGenerator";
+import StoryLoader from "./cmps/StoryLoader"
+import StoryGenerator from "./cmps/StoryGenerator";
 import './App.css'
 
 function App() {
