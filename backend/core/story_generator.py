@@ -55,7 +55,16 @@ class StoryGenerator:
 
         story_structure = story_parser.parse(response_text)
 
-        story_db = Story(title=story_structure.title, session_id=session_id)
+        story_db = Story(
+            title=story_structure.title,
+            session_id=session_id,
+            theme=theme,
+            genre=genre,
+            tone=tone,
+            age=age,
+            depth=depth,
+            length=length,
+        )
         db.add(story_db)
         db.flush()
 

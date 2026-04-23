@@ -10,6 +10,12 @@ class Story(Base):
     title = Column(String, index=True)
     session_id = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    theme = Column(String, nullable=True)
+    genre = Column(String, nullable=True)
+    tone = Column(String, nullable=True)
+    age = Column(Integer, nullable=True)
+    depth = Column(Integer, nullable=True)
+    length = Column(String, nullable=True)
 
     nodes = relationship("StoryNode", back_populates="story")
 

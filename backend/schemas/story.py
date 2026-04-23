@@ -43,6 +43,12 @@ class StoryListItemResponse(BaseModel):
     id: int
     title: str
     created_at: datetime
+    theme: Optional[str] = None
+    genre: Optional[str] = None
+    tone: Optional[str] = None
+    age: Optional[int] = None
+    depth: Optional[int] = None
+    length: Optional[str] = None
 
     class Config:
         from_attributes = True

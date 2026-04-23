@@ -1,8 +1,11 @@
 import uuid
+import logging
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, BackgroundTasks
 from sqlalchemy.orm import Session
+
+logger = logging.getLogger(__name__)
 
 from db.database import get_db, SessionLocal
 from models.story import Story, StoryNode
@@ -64,6 +67,24 @@ def create_story(
 ):
     response.set_cookie(key="session_id", value=session_id, httponly=True)
 
+    # Rate limiting: max 8 stories per 24 hours per session
+    window_start = datetime.now(timezone.utc) - timedelta(hours=24)
+    jobs_in_window = (
+        db.query(StoryJob)
+        .filter(StoryJob.session_id == session_id)
+        .filter(StoryJob.status.in_(["pending", "processing", "completed"]))
+        .filter(StoryJob.created_at >= window_start)
+        .order_by(StoryJob.created_at.asc())
+        .limit(8)
+        .all()
+    )
+    if len(jobs_in_window) >= 8:
+        retry_after = (jobs_in_window[0].created_at + timedelta(hours=24)).isoformat()
+        raise HTTPException(
+            status_code=429,
+            detail={"code": "rate_limit_exceeded", "retry_after": retry_after}
+        )
+
     job_id = str(uuid.uuid4())
 
     job = StoryJob(
@@ -113,9 +134,10 @@ def generate_story_task(job_id: str, theme: str, session_id: str,
             job.completed_at = datetime.now()
             db.commit()
         except Exception as e:
+            logger.error("Story generation failed for job %s: %s", job_id, e, exc_info=True)
             job.status = "failed"
             job.completed_at = datetime.now()
-            job.error = str(e)
+            job.error = "Story generation failed. Please try again."
             db.commit()
     finally:
         db.close()
