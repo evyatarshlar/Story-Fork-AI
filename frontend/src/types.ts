@@ -29,4 +29,10 @@ export interface StoredStory {
     id: number;
     title: string;
     created_at: string;
+    theme?: string;
+    genre?: string;
+    tone?: string;
+    age?: number;
+    depth?: number;
+    length?: string;
 }

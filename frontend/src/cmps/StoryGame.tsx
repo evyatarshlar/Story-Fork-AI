@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type { Story } from "../types";
 
 function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () => void }) {
     const { id: storyId } = useParams();
+    const { t } = useTranslation();
     const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
     const [history, setHistory] = useState<string[]>([]);
     const [copied, setCopied] = useState(false);
@@ -53,12 +55,12 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                     <p>{currentNode.content}</p>
                     {isEnding ?
                         <div className="story-ending">
-                            <h3>{isWinningEnding ? "Congratulations" : "The End"}</h3>
-                            {isWinningEnding ? "You reached a winning ending" : "Your adventure has ended."}
+                            <h3>{isWinningEnding ? t("story_game.congratulations") : t("story_game.the_end")}</h3>
+                            {isWinningEnding ? t("story_game.winning_ending") : t("story_game.adventure_ended")}
                         </div>
                         :
                         <div className="story-options">
-                            <h3>What will you do?</h3>
+                            <h3>{t("story_game.what_will_you_do")}</h3>
                             <div className="options-list">
                                 {options.map((option, index) => {
                                     return <button
@@ -77,17 +79,17 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                 <div className="story-controls">
                     {history.length > 0 && (
                         <button onClick={goBack} className="back-btn">
-                            ← Go Back
+                            {t("story_game.go_back")}
                         </button>
                     )}
                     <button onClick={restartStory} className="reset-btn">
-                        Restart Story
+                        {t("story_game.restart")}
                     </button>
                     <button onClick={shareStory} className={`share-btn${copied ? " copied" : ""}`}>
-                        {copied ? "Copied!" : "Share Story"}
+                        {copied ? t("story_game.copied") : t("story_game.share")}
                     </button>
                     {onNewStory && <button onClick={onNewStory} className="new-story-btn">
-                        New Story
+                        {t("story_game.new_story")}
                     </button>}
                 </div>
 

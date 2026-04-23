@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import LoadingStatus from "./LoadingStatus";
 import StoryGame from "./StoryGame";
 import { API_BASE_URL } from "../util";
@@ -8,6 +9,7 @@ import type { Story } from "../types";
 
 function StoryLoader() {
     const { id } = useParams();
+    const { t } = useTranslation();
     const [story, setStory] = useState<Story | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -22,9 +24,9 @@ function StoryLoader() {
             setStory(response.data);
         } catch (err) {
             if (axios.isAxiosError(err) && err.response?.status === 404) {
-                setError("Story is not found.")
+                setError(t("story_loader.not_found_text"))
             } else {
-                setError("Failed to load story.")
+                setError(t("story_loader.failed_load"))
             }
         } finally {
             setLoading(false);
@@ -34,26 +36,6 @@ function StoryLoader() {
     useEffect(() => {
         loadStory(id);
     }, [id]);
-
-    // useEffect(() => {
-    //     const loadStory = async () => {
-    //         setLoading(true);
-    //         setError(null);
-    //         try {
-    //             const response = await axios.get(`${API_BASE_URL}/stories/${id}/complete`);
-    //             setStory(response.data);
-    //         } catch (err) {
-    //             if (axios.isAxiosError(err) && err.response?.status === 404) {
-    //                 setError("Story is not found.");
-    //             } else {
-    //                 setError("Failed to load story.");
-    //             }
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     loadStory();
-    // }, [id]);
 
     const creatNewStory = () => {
             navigate("/");
@@ -67,10 +49,10 @@ function StoryLoader() {
         return (
             <div className="story-loader">
                 <div className="error-message">
-                    <h2>Story Not Found</h2>
+                    <h2>{t("story_loader.not_found_title")}</h2>
                     <p>{error}</p>
                     <button onClick={creatNewStory}>
-                        Go to Story Generator & Create New Story
+                        {t("story_loader.go_create")}
                     </button>
                 </div>
             </div>
