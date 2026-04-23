@@ -1,0 +1,137 @@
+{
+  "app": {
+    "title": "Interactive Story Generator",
+    "toggle_dark_mode": "Toggle dark mode",
+    "lang_switch": "עב"
+  },
+  "not_found": {
+    "message": "Oops! This page doesn't exist.",
+    "go_home": "Go to Story Generator"
+  },
+  "loading": {
+    "title": "Generating Your {{theme}} Story",
+    "step_1": "Building your world...",
+    "step_2": "Creating characters...",
+    "step_3": "Writing your story...",
+    "step_4": "Connecting story paths...",
+    "step_5": "Almost ready..."
+  },
+  "theme_input": {
+    "title": "Generate Your Adventure",
+    "subtitle": "Enter a theme for your interactive story",
+    "placeholder": "Enter a theme (e.g. pirates, space, medieval...)",
+    "error_empty": "Please enter a theme name",
+    "hide_options": "▲ Hide options",
+    "customize": "▼ Customize story",
+    "age_group": "Age group",
+    "story_depth": "Story depth",
+    "depth_levels": "{{n}} levels",
+    "segment_length": "Segment length",
+    "genre_label": "Genre",
+    "tone_label": "Tone",
+    "generate_btn": "Generate Story",
+    "examples_title": "Or pick an example:"
+  },
+  "age_groups": {
+    "any": "Any age",
+    "kids": "Kids (6-8)",
+    "tweens": "Tweens (9-12)",
+    "teens": "Teens (13-17)",
+    "adults": "Adults (18+)"
+  },
+  "lengths": {
+    "medium": "Medium (default)",
+    "short": "Short (2-3 sentences)",
+    "long": "Long (5-7 sentences)"
+  },
+  "genres": {
+    "any": "Any",
+    "Fantasy": "Fantasy",
+    "Sci-Fi": "Sci-Fi",
+    "Mystery": "Mystery",
+    "Horror": "Horror",
+    "Adventure": "Adventure",
+    "Romance": "Romance",
+    "Comedy": "Comedy"
+  },
+  "tones": {
+    "any": "Any",
+    "Adventurous": "Adventurous",
+    "Funny": "Funny",
+    "Scary": "Scary",
+    "Dramatic": "Dramatic",
+    "Heartwarming": "Heartwarming",
+    "Dark": "Dark"
+  },
+  "example_themes": [
+    "pirates",
+    "space",
+    "medieval",
+    "cyberpunk",
+    "underwater",
+    "dinosaurs",
+    "jungle survival",
+    "haunted mansion",
+    "robot uprising",
+    "arctic expedition",
+    "ancient Egypt",
+    "ninja village",
+    "sunken city of Atlantis",
+    "dragon tamer",
+    "secret spy academy",
+    "wild west",
+    "enchanted forest",
+    "alien first contact",
+    "underground kingdom",
+    "sky islands",
+    "volcano explorer",
+    "wizard school",
+    "time travel"
+  ],
+  "story_game": {
+    "what_will_you_do": "What will you do?",
+    "congratulations": "Congratulations",
+    "the_end": "The End",
+    "winning_ending": "You reached a winning ending",
+    "adventure_ended": "Your adventure has ended.",
+    "go_back": "← Go Back",
+    "restart": "Restart Story",
+    "share": "Share Story",
+    "copied": "Copied!",
+    "new_story": "New Story"
+  },
+  "story_generator": {
+    "your_stories": "Your Stories",
+    "community_stories": "Community Stories",
+    "try_again": "Try Again",
+    "timeout_error": "Story generation is taking too long. Please try again.",
+    "error_load": "Failed to load story. Please try again.",
+    "error_status": "Failed to check story status. Please try again.",
+    "error_generate": "Failed to generate story. Please try again.",
+    "rate_limit": "You've reached the limit! You can create more stories tomorrow at {{time}}",
+    "field_theme": "Theme",
+    "field_genre": "Genre",
+    "field_tone": "Tone",
+    "field_age": "Age",
+    "field_depth": "Depth",
+    "field_length": "Length",
+    "read_more": "Read More",
+    "read_less": "Read Less"
+  },
+  "story_loader": {
+    "not_found_title": "Story Not Found",
+    "not_found_text": "Story is not found.",
+    "failed_load": "Failed to load story.",
+    "go_create": "Go to Story Generator & Create New Story"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "mail": "Send me an email",
+    "github": "Open my GitHub",
+    "linkedin": "Open my LinkedIn profile",
+    "whatsapp": "Send me a WhatsApp message"
+  },
+  "footer": {
+    "made_by": "Made by Evyatar Shlar"
+  }
+}
