@@ -1,28 +1,16 @@
-import { useState, useEffect } from "react"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import StoryLoader from "./cmps/StoryLoader"
 import StoryGenerator from "./cmps/StoryGenerator";
 import NotFound from "./cmps/NotFound";
+import Footer from "./cmps/Footer";
+import Header from "./cmps/Header";
 import './App.css'
 
 function App() {
-  const [isDark, setIsDark] = useState(() =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  )
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light")
-  }, [isDark])
-
   return (
     <Router>
       <div className="app-container">
-        <header>
-          <h1>Interactive Story Generator</h1>
-          <button className="theme-toggle" onClick={() => setIsDark(d => !d)} aria-label="Toggle dark mode">
-            {isDark ? "☀️" : "🌙"}
-          </button>
-        </header>
+        <Header />
         <main>
           <Routes>
             <Route path={"/story/:id"} element={<StoryLoader />} />
@@ -30,6 +18,7 @@ function App() {
             <Route path={"*"} element={<NotFound />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   )
