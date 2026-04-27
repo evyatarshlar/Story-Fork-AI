@@ -9,8 +9,11 @@ from models.story import Story, StoryNode
 from core.models import StoryLLMResponse, StoryNodeLLM
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class StoryGenerator:
 
@@ -49,6 +52,8 @@ class StoryGenerator:
         response_text = raw_response
         if hasattr(raw_response, "content"):
             response_text = raw_response.content
+
+        logger.debug("Response text received: %s", response_text)
 
         if not response_text:
             raise ValueError("LLM returned an empty response. Check your API key and model name.")

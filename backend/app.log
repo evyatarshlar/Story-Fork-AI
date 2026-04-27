@@ -1,0 +1,257 @@
+2026-04-27 21:05:54,395 [DEBUG] asyncio: Using selector: SelectSelector
+2026-04-27 21:06:11,336 [DEBUG] openai._base_client: Request options: {'method': 'post', 'url': '/chat/completions', 'headers': {'X-Stainless-Raw-Response': 'true'}, 'files': None, 'idempotency_key': 'stainless-python-retry-5277cb4c-c9b9-4b07-8237-340b06e591e8', 'content': None, 'json_data': {'messages': [{'content': '\n                You are a creative story writer that creates engaging choose-your-own-adventure stories.\n                Generate a complete branching story with multiple paths and endings in the JSON format I\'ll specify.\n\n                STRICT LANGUAGE RULE:\n\nDetect the language of the user\'s input.\n\nWrite the entire story (title, content, options) ONLY in that detected language.\n\nIf the input is in English or the language is ambiguous, default to English.\n\nCRITICAL: Output MUST be a pure JSON object. Do not include any notes, explanations, or "I detected Hebrew" messages.\n                --- CUSTOMIZATION ---\n                - Use default settings.\n                ---------------------\n\n                The story should have:\n                1. A compelling title\n                2. A starting situation (root node) with 2 options\n                3. Each option should lead to another node with its own options\n                4. Some paths should lead to endings (both winning and losing)\n                5. At least one path should lead to a winning ending\n\n                Story structure requirements:\n                - Each node should have 2 options except for ending nodes\n                - The story should be 4 levels deep (including root node)\n                - Add variety in the path lengths (some end earlier, some later)\n                - Make sure there\'s at least one winning path\n\n                Content requirements for each node:\n                - Each non-ending node must contain 3-5 sentences: set the scene, describe what just happened, and build tension toward the choice.\n                - Each ending node must contain 4-6 sentences that provide a satisfying conclusion, describing the outcome and its consequences.\n                - Use sensory details (sights, sounds, feelings) to make scenes vivid.\n                - End every non-ending node, with a sentence that makes the choice feel urgent.\n\n                Output your story in this exact JSON structure:\n                The output should be formatted as a JSON instance that conforms to the JSON schema below.\n\nAs an example, for the schema {"properties": {"foo": {"title": "Foo", "description": "a list of strings", "type": "array", "items": {"type": "string"}}}, "required": ["foo"]}\nthe object {"foo": ["bar", "baz"]} is a well-formatted instance of the schema. The object {"properties": {"foo": ["bar", "baz"]}} is not well-formatted.\n\nHere is the output schema:\n```\n{"$defs": {"StoryNodeLLM": {"properties": {"content": {"description": "The main content of the story node", "title": "Content", "type": "string"}, "isEnding": {"description": "Whether this node is an ending node", "title": "Isending", "type": "boolean"}, "isWinningEnding": {"description": "Whether this node is a winning ending node", "title": "Iswinningending", "type": "boolean"}, "options": {"anyOf": [{"items": {"$ref": "#/$defs/StoryOptionLLM"}, "type": "array"}, {"type": "null"}], "default": null, "description": "The options for this node", "title": "Options"}}, "required": ["content", "isEnding", "isWinningEnding"], "title": "StoryNodeLLM", "type": "object"}, "StoryOptionLLM": {"properties": {"text": {"description": "The text of the option shown to the user", "title": "Text", "type": "string"}, "nextNode": {"additionalProperties": true, "description": "the next node content and its options", "title": "Nextnode", "type": "object"}}, "required": ["text", "nextNode"], "title": "StoryOptionLLM", "type": "object"}}, "properties": {"title": {"description": "The title of the story", "title": "Title", "type": "string"}, "rootNode": {"$ref": "#/$defs/StoryNodeLLM", "description": "The root node of the story"}}, "required": ["title", "rootNode"]}\n```\n\n                Don\'t simplify or omit any part of the story structure.\n                Don\'t add any text outside of the JSON structure.\n                ', 'role': 'system'}, {'content': "Create the story with this theme: שרידות בג'ונגל", 'role': 'user'}], 'model': 'gpt-4o-mini', 'stream': False, 'temperature': 0.7}}
+2026-04-27 21:06:11,531 [DEBUG] openai._base_client: Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2026-04-27 21:06:11,533 [DEBUG] httpcore.connection: connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=None socket_options=None
+2026-04-27 21:06:11,622 [DEBUG] httpcore.connection: connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000020C3B3A92B0>
+2026-04-27 21:06:11,623 [DEBUG] httpcore.connection: start_tls.started ssl_context=<ssl.SSLContext object at 0x0000020C3AE409E0> server_hostname='api.openai.com' timeout=None
+2026-04-27 21:06:11,653 [DEBUG] httpcore.connection: start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000020C3B2A1BD0>
+2026-04-27 21:06:11,654 [DEBUG] httpcore.http11: send_request_headers.started request=<Request [b'POST']>
+2026-04-27 21:06:11,656 [DEBUG] httpcore.http11: send_request_headers.complete
+2026-04-27 21:06:11,656 [DEBUG] httpcore.http11: send_request_body.started request=<Request [b'POST']>
+2026-04-27 21:06:11,658 [DEBUG] httpcore.http11: send_request_body.complete
+2026-04-27 21:06:11,658 [DEBUG] httpcore.http11: receive_response_headers.started request=<Request [b'POST']>
+2026-04-27 21:06:54,602 [DEBUG] httpcore.http11: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 27 Apr 2026 18:06:54 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9f2fc277bcc809cb-HFA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'user-984vk2drehqahytkbe4nogme'), (b'openai-processing-ms', b'42439'), (b'openai-project', b'proj_5v432ddenXEdkRwRYsBUUTkH'), (b'openai-version', b'2020-10-01'), (b'x-openai-proxy-wasm', b'v0.1'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'200000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'199008'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'297ms'), (b'x-request-id', b'req_1241a7ad704146959689bec7494db797'), (b'set-cookie', b'__cf_bm=F06ciCgX_Cef4pL0V7CSk4rJtC.b0gn6QD0pRYBAfNI-1777313171.1563594-1.0.1.1-NPYxsl6jPO.GxpJEs.Tvfr.VDoQo1cSnypN8Q.gRUMZbmr1abhKwZ88Fqnoq0sksrC2JmatkWmKEZUX.cvHxwsu1oVBbVqnzNlwJ73a5e54kvqO3jFVLoeMtQy9H38IT; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Mon, 27 Apr 2026 18:36:54 GMT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-04-27 21:06:54,603 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-27 21:06:54,604 [DEBUG] httpcore.http11: receive_response_body.started request=<Request [b'POST']>
+2026-04-27 21:06:54,605 [DEBUG] httpcore.http11: receive_response_body.complete
+2026-04-27 21:06:54,606 [DEBUG] httpcore.http11: response_closed.started
+2026-04-27 21:06:54,607 [DEBUG] httpcore.http11: response_closed.complete
+2026-04-27 21:06:54,608 [DEBUG] openai._base_client: HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 27 Apr 2026 18:06:54 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'cf-ray': '9f2fc277bcc809cb-HFA', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'user-984vk2drehqahytkbe4nogme', 'openai-processing-ms': '42439', 'openai-project': 'proj_5v432ddenXEdkRwRYsBUUTkH', 'openai-version': '2020-10-01', 'x-openai-proxy-wasm': 'v0.1', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '200000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '199008', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '297ms', 'x-request-id': 'req_1241a7ad704146959689bec7494db797', 'set-cookie': '__cf_bm=F06ciCgX_Cef4pL0V7CSk4rJtC.b0gn6QD0pRYBAfNI-1777313171.1563594-1.0.1.1-NPYxsl6jPO.GxpJEs.Tvfr.VDoQo1cSnypN8Q.gRUMZbmr1abhKwZ88Fqnoq0sksrC2JmatkWmKEZUX.cvHxwsu1oVBbVqnzNlwJ73a5e54kvqO3jFVLoeMtQy9H38IT; HttpOnly; Secure; Path=/; Domain=api.openai.com; Expires=Mon, 27 Apr 2026 18:36:54 GMT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2026-04-27 21:06:54,609 [DEBUG] openai._base_client: request_id: req_1241a7ad704146959689bec7494db797
+2026-04-27 21:06:54,627 [DEBUG] core.story_generator: Response text received: {
+  "title": "שרידות בג'ונגל",
+  "rootNode": {
+    "content": "אתה מתעורר בג'ונגל טרופי, המוח שלך עדיין מבלבל מהנפילה. העצים הגבוהים עוטפים אותך, והשמש מתגנבת בין העלים. אתה שומע קולות של חיות פרא מסביבך, והלב שלך מתחיל לפעום מהר יותר. אתה יודע שאתה צריך לקבל החלטה: האם לחפש מים או לנסות למצוא אוכל?",
+    "isEnding": false,
+    "isWinningEnding": false,
+    "options": [
+      {
+        "text": "לחפש מים",
+        "nextNode": {
+          "content": "אתה מתחיל ללכת לעבר צליל של מים זורמים. כל צעד מרגיש כמו מאבק, והזיעה מטפטפת מהמצח שלך. לאחר כמה דקות, אתה מגיע לנחל צלול, מימיו מבריקים כמו יהלומים. כשהשפתיים שלך נוגעות במים, אתה מרגיש חיים חוזרים לגופך. אבל עכשיו אתה שומע רעש מאחוריך, אתה חייב להחליט אם לברוח או לבדוק מה זה.",
+          "isEnding": false,
+          "isWinningEnding": false,
+          "options": [
+            {
+              "text": "לברוח מהצליל",
+              "nextNode": {
+                "content": "אתה פונה במהירות ורץ בין העצים, הלב שלך מהיר כמו רעם. אתה שומע את הצלילים מתקרבים, ורגליך כואבות מהמאמץ. פתאום, אתה נתקל במערה. אתה יכול להיכנס פנימה כדי להסתתר או להמשיך לרוץ.",
+                "isEnding": false,
+                "isWinningEnding": false,
+                "options": [
+                  {
+                    "text": "להיכנס למערה",
+                    "nextNode": {
+                      "content": "בתוך המערה, האוויר קריר ורטוב. אתה שומע את הצלילים מתרחקים, ואתה מתיישב על האדמה הקרה, מרגיש בטוח לרגע. אבל פתאום, אתה רואה זוג עיניים זוהרות מסתכלות עליך. זה טורף! אתה חייב לפעול במהירות.",
+                      "isEnding": true,
+                      "isWinningEnding": false,
+                      "options": []
+                    }
+                  },
+                  {
+                    "text": "להמשיך לרוץ",
+                    "nextNode": {
+                      "content": "אתה בורח בין העצים, והלב שלך מתמלא בתקווה. הצלילים מתרחקים, ואתה מוצא את עצמך במקום פתוח, עם שדות ירוקים באופק. אתה רואה שביל קטן שמוביל לעבר מחנה. האם אתה עוקב אחרי השביל או ממשיך לחפש מים?",
+                      "isEnding": false,
+                      "isWinningEnding": false,
+                      "options": [
+                        {
+                          "text": "ללכת לשביל",
+                          "nextNode": {
+                            "content": "כשהשביל מתהדק, אתה מגיע למחנה קטן. תושבים מקומיים רואים אותך ומציעים עזרה. הם נותנים לך מים ואוכל, ואתה מרגיש את הכוחות שלך חוזרים. אתה מצליח למצוא מקום בטוח, ואתה יודע שתוכל לשרוד כאן.",
+                            "isEnding": true,
+                            "isWinningEnding": true,
+                            "options": []
+                          }
+                        },
+                        {
+                          "text": "לחפש מים",
+                          "nextNode": {
+                            "content": "אתה מחליט להמשיך לחפש מים, אבל ככל שאתה הולך יותר רחוק, אתה מרגיש את הכוחות שלך מתמעטים. אחרי כמה שעות של חיפוש, אתה מתמוטט מהעייפות. הג'ונגל שואב אותך פנימה, ואתה מבין שלא תוכל להימנע מהגסיסה.",
+                            "isEnding": true,
+                            "isWinningEnding": false,
+                            "options": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text": "לבדוק מה זה",
+              "nextNode": {
+                "content": "אתה מתקרב לאט, לבך פועם בחוזקה. כשאתה מתקרב, אתה מגלה שזה רק תוכי גדול שרק צועק. אתה מרגיש הקלה, אבל עכשיו אתה בודד בג'ונגל. האם אתה מנסה למצוא אוכל או לחזור למקום המים?",
+                "isEnding": false,
+                "isWinningEnding": false,
+                "options": [
+                  {
+                    "text": "לנסות למצוא אוכל",
+                    "nextNode": {
+                      "content": "אתה מתחיל לחפש פירות מבעד לעלים. אתה מוצא כמה פירות טרופיים מתוקים, ומרגיש את האנרגיה חוזרת אליך. אך פתאום אתה שומע רשרוש מאחוריך. אתה חייב להחליט האם להישאר ולראות מה זה או לברוח.",
+                      "isEnding": false,
+                      "isWinningEnding": false,
+                      "options": [
+                        {
+                          "text": "להישאר ולראות",
+                          "nextNode": {
+                            "content": "אתה נשאר במקום, והלב שלך פועם בחוזקה. מתוך השיחים קופץ ציפור גדולה, אבל היא עפה משם מהר. אתה מרגיש את הלחץ יורד, אך אתה יודע שאתה בודד. האם אתה מנסה למצוא מחסה ללילה או חוזר למים?",
+                            "isEnding": false,
+                            "isWinningEnding": false,
+                            "options": [
+                              {
+                                "text": "לחפש מחסה",
+                                "nextNode": {
+                                  "content": "אתה מחפש מקום להסתתר, ומוצא עץ גדול עם חלל. אתה נכנס פנימה ומרגיש בטוח. הלילה יורד ואתה שומע קולות של חיות בלילה, אבל אתה יודע שאתה במקום בטוח. אתה מצליח לשרוד עוד לילה.",
+                                  "isEnding": true,
+                                  "isWinningEnding": true,
+                                  "options": []
+                                }
+                              },
+                              {
+                                "text": "לחזור למים",
+                                "nextNode": {
+                                  "content": "אתה חוזר למקום המים, אבל הפעם אתה לא לבד. אתה נתקל בטורף, ואין לך לאן לברוח. אתה מבין ששגית בהחלטתך, וזה יכול להיות הסוף שלך.",
+                                  "isEnding": true,
+                                  "isWinningEnding": false,
+                                  "options": []
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "text": "לברוח",
+                          "nextNode": {
+                            "content": "אתה בורח במהירות, והלב שלך פועם בחוזקה. אתה מתרחק מהשיחים, אך לא יודע לאן ללכת. הג'ונגל הופך לעבה יותר, ואתה מרגיש שהכוחות שלך מתמעטים. אתה מתחיל להבין שהכיוונים שלך אבודים.",
+                            "isEnding": true,
+                            "isWinningEnding": false,
+                            "options": []
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "text": "לחזור למים",
+                    "nextNode": {
+                      "content": "אתה מחליט לחזור למקום המים, והדרך נראית ארוכה ומעייפת. כשאתה מגיע, אתה רואה שהנחל זורם באיטיות, והשמש מתחילה לשקוע. אתה יודע שאתה צריך למצוא מקום לישון לפני שירד הלילה, אבל אתה מרגיש עייף וחסר כוח.",
+                      "isEnding": false,
+                      "isWinningEnding": false,
+                      "options": [
+                        {
+                          "text": "לחפש מקום לישון ליד המים",
+                          "nextNode": {
+                            "content": "אתה מוצא מקום בטוח ליד המים, ומרגיש שמירה על עצמך. כשאתה שוכב, אתה שומע קולות של חיות מתקרבות, אך אתה בטוח. אתה מצליח לישון בלילה, ומקיץ בבוקר עם כוח חדש. אתה יודע שהצלחת לשרוד עוד יום.",
+                            "isEnding": true,
+                            "isWinningEnding": true,
+                            "options": []
+                          }
+                        },
+                        {
+                          "text": "לחפש מקום מחסה גבוה",
+                          "nextNode": {
+                            "content": "אתה מחפש מקום גבוה כדי להרגיש בטוח, אך כשאתה מטפס על עץ גבוה, אתה מתנדנד. עץ נשבר, ואתה מתמוטט למטה. כשאתה מתעורר, אתה מבין שאתה פצוע ולא יכול להילחם יותר.",
+                            "isEnding": true,
+                            "isWinningEnding": false,
+                            "options": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "text": "למצוא אוכל",
+        "nextNode": {
+          "content": "אתה מחליט להתחיל לחפש אוכל, והג'ונגל מסביבך שקט. אתה רואה פירות צבעוניים על העצים, אך אתה יודע שהם יכולים להיות מסוכנים. האם אתה מוכן לקחת את הסיכון? עליך להחליט אם לנסות לקטוף פירות או לחפש חיות כדי לצוד.",
+          "isEnding": false,
+          "isWinningEnding": false,
+          "options": [
+            {
+              "text": "לנסות לקטוף פירות",
+              "nextNode": {
+                "content": "אתה מתקרב בעדינות לעץ, מרים ידיים כדי לקטוף את הפירות. כשאתה טועם את אחד מהם, אתה מרגיש מתוק וטעים. אבל לאחר כמה דקות, אתה מתחיל להרגיש רע. הפירות היו רעילים, ואתה מבין שהשגת את סופך.",
+                "isEnding": true,
+                "isWinningEnding": false,
+                "options": []
+              }
+            },
+            {
+              "text": "לחפש חיות לצוד",
+              "nextNode": {
+                "content": "אתה מחליט לחפש חיות, והעיניים שלך סורקות את השיחים. פתאום, אתה רואה צבי קטן. אתה מתקרב אליו, אך ברגע האחרון הוא בורח. האם תמשיך לחפש או שתנסה לשוב למקום המים?",
+                "isEnding": false,
+                "isWinningEnding": false,
+                "options": [
+                  {
+                    "text": "להמשיך לחפש",
+                    "nextNode": {
+                      "content": "אתה ממשיך לחפש, והלב שלך פועם בחוזקה. אחרי כמה דקות, אתה רואה חיה גדולה יותר, אולי תהיה לך הזדמנות לצוד אותה. אתה מתקרב בזהירות, מרגיש את האדרנלין זורם בעורקים שלך. האם תנסה לתפוס אותה?",
+                      "isEnding": false,
+                      "isWinningEnding": false,
+                      "options": [
+                        {
+                          "text": "לנסות לתפוס את החיה",
+                          "nextNode": {
+                            "content": "אתה קופץ לעבר החיה, אך היא מתהפכת ובריחה מהירה. אתה מתמוטט, והג'ונגל מקיף אותך. אתה מבין שלא תוכל לשרוד כאן יותר.",
+                            "isEnding": true,
+                            "isWinningEnding": false,
+                            "options": []
+                          }
+                        },
+                        {
+                          "text": "לברוח מהחיה",
+                          "nextNode": {
+                            "content": "אתה מחליט להתרחק, והלב שלך פועם בחוזקה. אתה רץ במהירות בין השיחים, ומצליח למצוא מחסה בעץ גבוה. אתה יושב שם, מרגיש בטוח לזמן מה. הלילה יורד, ואתה מצליח לשרוד עוד יום.",
+                            "isEnding": true,
+                            "isWinningEnding": true,
+                            "options": []
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "text": "לחזור למים",
+                    "nextNode": {
+                      "content": "אתה מחליט לשוב למקום המים, והדרך נראית ארוכה ומעייפת. כשאתה מגיע, אתה רואה שהנחל זורם באיטיות, והשמש מתחילה לשקוע. אתה יודע שאתה צריך למצוא מקום לישון לפני שירד הלילה, אבל אתה מרגיש עייף וחסר כוח.",
+                      "isEnding": false,
+                      "isWinningEnding": false,
+                      "options": [
+                        {
+                          "text": "לחפש מקום לישון ליד המים",
+                          "nextNode": {
+                            "content": "אתה מוצא מקום בטוח ליד המים, ומרגיש שמירה על עצמך. כשאתה שוכב, אתה שומע קולות של חיות מתקרבות, אך אתה בטוח. אתה מצליח לישון בלילה, ומקיץ בבוקר עם כוח חדש. אתה יודע שהצלחת לשרוד עוד יום.",
+                            "isEnding": true,
+                            "isWinningEnding": true,
+                            "options": []
+                          }
+                        },
+                        {
+                          "text": "לחפש מקום מחסה גבוה",
+                          "nextNode": {
+                            "content": "אתה מחפש מקום גבוה כדי להרגיש בטוח, אך כשאתה מטפס על עץ גבוה, אתה מתנדנד. עץ נשבר, ואתה מתמוטט למטה. כשאתה מתעורר, אתה מבין שאתה פצוע ולא יכול להילחם יותר.",
+                            "isEnding": true,
+                            "isWinningEnding": false,
+                            "options": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
