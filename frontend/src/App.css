@@ -49,6 +49,7 @@ main {
   flex: 1;
 }
 
+/* ── Header ── */
 header {
   display: flex;
   align-items: center;
@@ -62,22 +63,151 @@ header h1 {
   margin-bottom: 0.5rem;
 }
 
-.header-controls {
+/* ── Hamburger button ── */
+.hamburger-wrapper {
   position: absolute;
+  z-index: 1;
   right: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-[dir="rtl"] .header-controls {
+[dir="rtl"] .hamburger-wrapper {
   right: auto;
   left: 0;
 }
 
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid rgba(128,128,128,0.3);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  color: var(--text-color);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.hamburger-btn:hover {
+  background-color: rgba(0,0,0,0.07);
+  border-color: rgba(128,128,128,0.5);
+}
+
+[data-theme="dark"] .hamburger-btn:hover {
+  background-color: rgba(255,255,255,0.07);
+}
+
+.hamburger-btn .bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-color);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate to × when open */
+.hamburger-btn.open .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger-btn.open .bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger-btn.open .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Dropdown menu ── */
+.hamburger-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 0.5rem 0;
+  z-index: 100;
+  animation: menuFadeIn 0.18s ease;
+}
+
+[dir="rtl"] .hamburger-menu {
+  right: auto;
+  left: 0;
+}
+
+.hamburger-menu.menu-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Menu rows ── */
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  gap: 1rem;
+}
+
+.menu-item-label {
+  font-size: 0.875rem;
+  color: var(--text-color);
+  white-space: nowrap;
+  flex: 1;
+}
+
+.menu-divider {
+  height: 1px;
+  background-color: var(--card-border-color);
+  margin: 0.3rem 0;
+}
+
+.menu-item-login {
+  padding: 0.5rem 0.75rem;
+}
+
+/* ── Lang toggle (inside menu) ── */
+.menu-action-btn {
+  background: none;
+  border: 1px solid var(--card-border-color);
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--primary-color);
+  transition: background-color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.menu-action-btn:hover {
+  background-color: rgba(0,0,0,0.07);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .menu-action-btn:hover {
+  background-color: rgba(255,255,255,0.07);
+}
+
+/* ── Theme toggle switch (inside menu) ── */
 .theme-switch-container {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .theme-switch-checkbox {
@@ -87,7 +217,7 @@ header h1 {
 .theme-switch-label {
   position: relative;
   display: inline-block;
-  width: 48px;
+  width: 44px;
   height: 24px;
   background-color: #b0bec5;
   border-radius: 12px;
@@ -101,52 +231,49 @@ header h1 {
 
 .theme-switch-slider {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 20px;
-  height: 20px;
-  background-color: var(--background-color);
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
   border-radius: 50%;
   transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .theme-switch-checkbox:checked + .theme-switch-label .theme-switch-slider {
-  transform: translateX(24px);
+  transform: translateX(20px);
 }
 
-[dir="rtl"] .theme-switch-label {
-  direction: ltr;
+.theme-switch-label {
+  direction: ltr; /* always LTR so slider moves correctly */
 }
 
-@media (max-width: 480px) {
-  .theme-switch-label {
-    width: 40px;
-    height: 20px;
-  }
-
-  .theme-switch-slider {
-    width: 16px;
-    height: 16px;
-  }
-
-  .theme-switch-checkbox:checked + .theme-switch-label .theme-switch-slider {
-    transform: translateX(20px);
-  }
-}
-
-.lang-toggle {
-  background: none;
-  border: 1px solid #ccc;
+/* ── Login button ── */
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.55rem 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
   border-radius: var(--border-radius);
-  padding: 0.2rem 0.5rem;
-  font-size: 0.85rem;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  color: var(--primary-color);
+  transition: background-color 0.2s, transform 0.1s;
 }
 
-.lang-toggle:hover {
-  background-color: rgba(0,0,0,0.08);
+.login-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-1px);
+}
+
+.login-btn:active {
+  transform: translateY(0);
 }
 
 /* Site Footer */
@@ -503,7 +630,9 @@ button:hover {
 }
 
 .option-btn {
-  text-align: start;
+  text-align: center;
+  font-weight: bold;
+  color: #222;
   padding: 1rem;
   background-color: #f0f7ff;
   color: var(--text-color);
@@ -524,6 +653,43 @@ button:hover {
 .story-ending h3 {
   color: var(--primary-color);
   margin-bottom: 1rem;
+}
+
+/* Winning ending — bouncy celebratory entrance */
+.story-ending--win h3,
+.story-ending--win .ending-text {
+  animation: ending-win-bounce 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.story-ending--win .ending-text {
+  animation-delay: 0.18s;
+}
+
+@keyframes ending-win-bounce {
+  0%   { opacity: 0; transform: scale(0.6) translateY(-20px); }
+  55%  { opacity: 1; transform: scale(1.12) translateY(4px); }
+  75%  { transform: scale(0.95) translateY(-2px); }
+  90%  { transform: scale(1.04) translateY(1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Losing ending — gentle fade in */
+.story-ending--lose h3,
+.story-ending--lose .ending-text {
+  animation: ending-lose-fade 1.4s ease-out both;
+}
+
+.story-ending--lose .ending-text {
+  animation-delay: 0.4s;
+}
+
+@keyframes ending-lose-fade {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.ending-text {
+  margin-top: 0.25rem;
 }
 
 .restart-btn {
@@ -774,16 +940,16 @@ button:hover {
   text-align: right;
 }
 
-[dir="rtl"] .story-node p {
-  text-align: right;
+.story-node p {
+  text-align: center;
 }
 
-[dir="rtl"] .story-options h3 {
-  text-align: right;
+.story-options h3 {
+  text-align: center;
 }
 
-[dir="rtl"] .story-ending {
-  text-align: right;
+.story-ending {
+  text-align: center;
 }
 
 .examples ul {
@@ -989,4 +1155,20 @@ button:hover {
   .mobile-only { display: none; }
 }
 
+/* ---- Ending effects ---- */
 
+/* Dark flash overlay for losing endings */
+.ending-dark-flash {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  pointer-events: none;
+  z-index: 9998;
+  animation: ending-dark-flash 1.2s ease-out forwards;
+}
+
+@keyframes ending-dark-flash {
+  0%   { opacity: 0; }
+  18%  { opacity: 1; }
+  100% { opacity: 0; }
+}

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { Story } from "../types";
+import { useEndingEffects } from "../hooks/useEndingEffects";
+import { Confetti, DarkFlash } from "./EndingEffects";
 
 function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () => void }) {
     const { id: storyId } = useParams();
@@ -19,6 +21,8 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
     const isEnding = currentNode?.is_ending ?? false;
     const isWinningEnding = currentNode?.is_winning_ending ?? false;
     const options = !isEnding && currentNode?.options ? currentNode.options : [];
+
+    const { showConfetti, showDarkFlash } = useEndingEffects(isEnding, isWinningEnding);
 
     const chooseOption = (optionId: string) => {
         if (currentNodeId) {
@@ -47,6 +51,8 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
 
     return (
         <div className="story-game">
+            <Confetti active={showConfetti} />
+            <DarkFlash active={showDarkFlash} />
             <header className="story-header">
                 <h2>{story?.title}</h2>
             </header>
@@ -54,9 +60,9 @@ function StoryGame({ story, onNewStory }: { story: Story | null; onNewStory: () 
                 {currentNode && <div className="story-node" key={currentNodeId}>
                     <p>{currentNode.content}</p>
                     {isEnding ?
-                        <div className="story-ending">
+                        <div className={`story-ending ${isWinningEnding ? "story-ending--win" : "story-ending--lose"}`}>
                             <h3>{isWinningEnding ? t("story_game.congratulations") : t("story_game.the_end")}</h3>
-                            {isWinningEnding ? t("story_game.winning_ending") : t("story_game.adventure_ended")}
+                            <p className="ending-text">{isWinningEnding ? t("story_game.winning_ending") : t("story_game.adventure_ended")}</p>
                         </div>
                         :
                         <div className="story-options">
