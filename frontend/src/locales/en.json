@@ -2,7 +2,13 @@
   "app": {
     "title": "Interactive Story Generator",
     "toggle_dark_mode": "Toggle dark mode",
-    "lang_switch": "עב"
+    "lang_switch": "עב",
+    "menu": "Menu",
+    "language": "Language",
+    "theme": "Theme",
+    "theme_dark": "Dark",
+    "theme_light": "Light",
+    "login": "Login"
   },
   "not_found": {
     "message": "Oops! This page doesn't exist.",

@@ -2,7 +2,13 @@
   "app": {
     "title": "יוצר הסיפורים האינטראקטיבי",
     "toggle_dark_mode": "החלף מצב תצוגה",
-    "lang_switch": "EN"
+    "lang_switch": "EN",
+    "menu": "תפריט",
+    "language": "שפה",
+    "theme": "ערכת נושא",
+    "theme_dark": "כהה",
+    "theme_light": "בהיר",
+    "login": "התחברות"
   },
   "not_found": {
     "message": "אופס! הדף הזה לא קיים.",
