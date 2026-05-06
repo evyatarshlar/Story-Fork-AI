@@ -831,6 +831,7 @@ button:hover {
 .recent-story-item:hover {
   background-color: #e0f0ff;
   transform: translateY(-1px);
+  z-index: 1;
 }
 
 .recent-story-title {
